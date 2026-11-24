@@ -19,7 +19,6 @@ jobs:
       - name: Generate Android platform
         run: flutter create --platforms=android --org uz.boston --project-name boston_go .
 
-      
       - name: Configure app
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
@@ -31,3 +30,15 @@ jobs:
             static const supabaseAnonKey = '$SUPABASE_ANON_KEY';
           }
           EOF
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Build APK
+        run: flutter build apk --release
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: boston-go-android-apk
+          path: build/app/outputs/flutter-apk/app-release.apk
