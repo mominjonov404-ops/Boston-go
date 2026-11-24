@@ -42,3 +42,8 @@ jobs:
         with:
           name: boston-go-android-apk
           path: build/app/outputs/flutter-apk/app-release.apk
+          
+      - name: Add internet permission
+        run: |
+          sed -i '/<manifest/a\    <uses-permission android:name="android.permission.INTERNET"/>' android/app/src/main/AndroidManifest.xml
+
